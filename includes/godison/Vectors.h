@@ -2,6 +2,12 @@
 #define VECTORS_H
 #include <godison/Types.h>
 
+#ifdef QT_MODULE
+
+#include <QColor>
+
+#endif
+
 #include <array>
 #include <cmath>
 #include <initializer_list>
@@ -182,6 +188,7 @@ class Vector2D : public Vector<float, 2> {
   };
   inline vector_type X() const { return data_[0]; }
   inline vector_type Y() const { return data_[1]; }
+
   inline void SetX(vector_type value) { data_[0] = value; }
   inline void SetY(vector_type value) { data_[1] = value; }
 };
@@ -220,9 +227,15 @@ class Vector3D : public Vector<float, 3> {
   inline vector_type X() const { return data_[0]; }
   inline vector_type Y() const { return data_[1]; }
   inline vector_type Z() const { return data_[2]; }
+
   inline void SetX(vector_type value) { data_[0] = value; }
   inline void SetY(vector_type value) { data_[1] = value; }
   inline void SetZ(vector_type value) { data_[2] = value; }
+
+#ifdef QT_MODULE
+  Vector3D(const QColor& color)
+      : Vector3D(color.red(), color.green(), color.blue()){};
+#endif
 };
 class Vector4D : public Vector<float, 4> {
  public:
@@ -253,6 +266,7 @@ class Vector4D : public Vector<float, 4> {
   inline void SetZ(double value) { data_[2] = value; }
   inline void SetW(double value) { data_[3] = value; }
 };
+
 }  // namespace vectors
 }  // namespace godison
 #endif  // VECTORS_H
