@@ -5,6 +5,9 @@
 #ifdef GODISON_QT_MODULE
 
 #include <QColor>
+#include <QVector2D>
+#include <QVector3D>
+#include <QVector4D>
 
 #endif
 
@@ -191,6 +194,9 @@ class Vector2D : public Vector<float, 2> {
 
   inline void SetX(vector_type value) { data_[0] = value; }
   inline void SetY(vector_type value) { data_[1] = value; }
+#ifdef GODISON_QT_MODULE
+  Vector2D(const QVector2D& vec) : Vector2D(vec.x(), vec.y()){};
+#endif
 };
 class Vector3D : public Vector<float, 3> {
  public:
@@ -235,6 +241,7 @@ class Vector3D : public Vector<float, 3> {
 #ifdef GODISON_QT_MODULE
   Vector3D(const QColor& color)
       : Vector3D(color.red(), color.green(), color.blue()){};
+  Vector3D(const QVector3D& vec) : Vector3D(vec.x(), vec.y(), vec.z()){};
 #endif
 };
 class Vector4D : public Vector<float, 4> {
@@ -265,6 +272,10 @@ class Vector4D : public Vector<float, 4> {
   inline void SetY(double value) { data_[1] = value; }
   inline void SetZ(double value) { data_[2] = value; }
   inline void SetW(double value) { data_[3] = value; }
+#ifdef GODISON_QT_MODULE
+  Vector4D(const QVector4D& vec)
+      : Vector4D(vec.x(), vec.y(), vec.z(), vec.w()){};
+#endif
 };
 
 }  // namespace vectors
