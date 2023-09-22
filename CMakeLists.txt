@@ -18,7 +18,7 @@ target_include_directories(${LIB_NAME} PUBLIC includes)
 
 add_executable(godison_main main.cc)
 target_link_libraries(godison_main PRIVATE ${LIB_NAME})
-if(MYDEFS MATCHES "QT_MODULE")
+if(MYDEFS MATCHES "GODISON_QT_MODULE")
     find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Gui)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
     target_link_libraries(${LIB_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Gui)

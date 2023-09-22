@@ -2,7 +2,7 @@
 #define VECTORS_H
 #include <godison/Types.h>
 
-#ifdef QT_MODULE
+#ifdef GODISON_QT_MODULE
 
 #include <QColor>
 
@@ -232,7 +232,7 @@ class Vector3D : public Vector<float, 3> {
   inline void SetY(vector_type value) { data_[1] = value; }
   inline void SetZ(vector_type value) { data_[2] = value; }
 
-#ifdef QT_MODULE
+#ifdef GODISON_QT_MODULE
   Vector3D(const QColor& color)
       : Vector3D(color.red(), color.green(), color.blue()){};
 #endif
