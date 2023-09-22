@@ -196,6 +196,7 @@ class Vector2D : public Vector<float, 2> {
   inline void SetY(vector_type value) { data_[1] = value; }
 #ifdef GODISON_QT_MODULE
   Vector2D(const QVector2D& vec) : Vector2D(vec.x(), vec.y()){};
+  QVector2D ToQVector2D() { return {X(), Y()}; };
 #endif
 };
 class Vector3D : public Vector<float, 3> {
@@ -241,7 +242,9 @@ class Vector3D : public Vector<float, 3> {
 #ifdef GODISON_QT_MODULE
   Vector3D(const QColor& color)
       : Vector3D(color.red(), color.green(), color.blue()){};
+  QColor ToQColor() { return {X(), Y(), Z()}; };
   Vector3D(const QVector3D& vec) : Vector3D(vec.x(), vec.y(), vec.z()){};
+  QVector3D ToQVector3D() { return {X(), Y(), Z()}; };
 #endif
 };
 class Vector4D : public Vector<float, 4> {
@@ -275,6 +278,7 @@ class Vector4D : public Vector<float, 4> {
 #ifdef GODISON_QT_MODULE
   Vector4D(const QVector4D& vec)
       : Vector4D(vec.x(), vec.y(), vec.z(), vec.w()){};
+  QVector4D ToQVector4D() { return {X(), Y(), Z(), W()}; };
 #endif
 };
 
