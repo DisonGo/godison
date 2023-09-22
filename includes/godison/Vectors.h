@@ -196,7 +196,7 @@ class Vector2D : public Vector<float, 2> {
   inline void SetY(vector_type value) { data_[1] = value; }
 #ifdef GODISON_QT_MODULE
   Vector2D(const QVector2D& vec) : Vector2D(vec.x(), vec.y()){};
-  QVector2D ToQVector2D() {
+  QVector2D ToQVector2D() const {
     return {
         X(),
         Y(),
@@ -247,12 +247,12 @@ class Vector3D : public Vector<float, 3> {
 #ifdef GODISON_QT_MODULE
   Vector3D(const QColor& color)
       : Vector3D(color.red(), color.green(), color.blue()){};
-  QColor ToQColor() {
+  QColor ToQColor() const {
     auto i_vec = ToVector<3, int>();
     return {i_vec[0], i_vec[1], i_vec[2]};
   };
   Vector3D(const QVector3D& vec) : Vector3D(vec.x(), vec.y(), vec.z()){};
-  QVector3D ToQVector3D() { return {X(), Y(), Z()}; };
+  QVector3D ToQVector3D() const { return {X(), Y(), Z()}; };
 #endif
 };
 class Vector4D : public Vector<float, 4> {
@@ -286,7 +286,7 @@ class Vector4D : public Vector<float, 4> {
 #ifdef GODISON_QT_MODULE
   Vector4D(const QVector4D& vec)
       : Vector4D(vec.x(), vec.y(), vec.z(), vec.w()){};
-  QVector4D ToQVector4D() { return {X(), Y(), Z(), W()}; };
+  QVector4D ToQVector4D() const { return {X(), Y(), Z(), W()}; };
 #endif
 };
 
