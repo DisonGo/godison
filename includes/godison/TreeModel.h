@@ -2,9 +2,11 @@
 #define TreeModel_H
 
 #include <memory>
+#include <string>
 #include <vector>
 
-namespace s21 {
+namespace godison {
+namespace models {
 template <class T>
 class TreeItem {
  public:
@@ -116,15 +118,16 @@ class TreeModel {
     return root_->ChildGensCount();
   }
   std::shared_ptr<TItem> GetRoot() { return root_; }
-  virtual AddItem(NodeType* object, std::string label, int insert_pos = -1,
-                  NodeType* parent = nullptr) = 0;
-  bool IsInTree(NodeType* object) {
-    return root_->IsChildObjectRecoursive(object);
-  }
+  virtual void AddItem(NodeType* node, std::string label, int insert_pos = -1,
+                       NodeType* parent = nullptr) = 0;
+  virtual void DeleteItem(NodeType* node) = 0;
+  bool IsInTree(NodeType* node) { return root_->IsChildObjectRecoursive(node); }
 
  protected:
-  std::shared_ptr<TreeItem> root_;
+  std::shared_ptr<TItem> root_;
 };
-}  // namespace s21
+}  // namespace models
+
+}  // namespace godison
 
 #endif  // TreeModel_H
