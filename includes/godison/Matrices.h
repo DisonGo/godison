@@ -87,18 +87,6 @@ class Matrix {
     if (rows_ != other.cols_)
       throw "Bad size. Can multiple only square matrices.";
     Matrix result;
-    //    vectors::Vector<values_type, h> temp;
-    //    for (size_t j = 0; j < other.cols_; j++) {
-    //      for (size_t k = 0; k < rows_; k++) {
-    //        temp[k] = other(k, j);
-    //      }
-    //      for (size_t i = 0; i < rows_; i++) {
-    //        float sum = 0.0;
-    //        for (size_t k = 0; k < rows_; k++) sum += (*this)(i, k) * temp[k];
-    //        result(i, j) = sum;
-    //      }
-    //    }
-    //    Row multiply
     for (size_t row = 0; row < rows_; row++)
       for (size_t col = 0; col < other.cols_; col++)
         for (size_t k = 0; k < cols_; k++)

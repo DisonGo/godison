@@ -2,6 +2,15 @@
 #define VECTORS_H
 #include <godison/Types.h>
 
+#ifdef GODISON_QT_MODULE
+
+#include <QColor>
+#include <QVector2D>
+#include <QVector3D>
+#include <QVector4D>
+
+#endif
+
 #include <array>
 #include <cmath>
 #include <initializer_list>
@@ -182,8 +191,18 @@ class Vector2D : public Vector<float, 2> {
   };
   inline vector_type X() const { return data_[0]; }
   inline vector_type Y() const { return data_[1]; }
+
   inline void SetX(vector_type value) { data_[0] = value; }
   inline void SetY(vector_type value) { data_[1] = value; }
+#ifdef GODISON_QT_MODULE
+  Vector2D(const QVector2D& vec) : Vector2D(vec.x(), vec.y()){};
+  QVector2D ToQVector2D() const {
+    return {
+        X(),
+        Y(),
+    };
+  };
+#endif
 };
 class Vector3D : public Vector<float, 3> {
  public:
@@ -220,9 +239,21 @@ class Vector3D : public Vector<float, 3> {
   inline vector_type X() const { return data_[0]; }
   inline vector_type Y() const { return data_[1]; }
   inline vector_type Z() const { return data_[2]; }
+
   inline void SetX(vector_type value) { data_[0] = value; }
   inline void SetY(vector_type value) { data_[1] = value; }
   inline void SetZ(vector_type value) { data_[2] = value; }
+
+#ifdef GODISON_QT_MODULE
+  Vector3D(const QColor& color)
+      : Vector3D(color.red(), color.green(), color.blue()){};
+  QColor ToQColor() const {
+    auto i_vec = ToVector<3, int>();
+    return {i_vec[0], i_vec[1], i_vec[2]};
+  };
+  Vector3D(const QVector3D& vec) : Vector3D(vec.x(), vec.y(), vec.z()){};
+  QVector3D ToQVector3D() const { return {X(), Y(), Z()}; };
+#endif
 };
 class Vector4D : public Vector<float, 4> {
  public:
@@ -243,16 +274,22 @@ class Vector4D : public Vector<float, 4> {
     return *this;
   }
 
-  inline double X() const { return data_[0]; }
-  inline double Y() const { return data_[1]; }
-  inline double Z() const { return data_[2]; }
-  inline double W() const { return data_[3]; }
+  inline vector_type X() const { return data_[0]; }
+  inline vector_type Y() const { return data_[1]; }
+  inline vector_type Z() const { return data_[2]; }
+  inline vector_type W() const { return data_[3]; }
 
-  inline void SetX(double value) { data_[0] = value; }
-  inline void SetY(double value) { data_[1] = value; }
-  inline void SetZ(double value) { data_[2] = value; }
-  inline void SetW(double value) { data_[3] = value; }
+  inline void SetX(vector_type value) { data_[0] = value; }
+  inline void SetY(vector_type value) { data_[1] = value; }
+  inline void SetZ(vector_type value) { data_[2] = value; }
+  inline void SetW(vector_type value) { data_[3] = value; }
+#ifdef GODISON_QT_MODULE
+  Vector4D(const QVector4D& vec)
+      : Vector4D(vec.x(), vec.y(), vec.z(), vec.w()){};
+  QVector4D ToQVector4D() const { return {X(), Y(), Z(), W()}; };
+#endif
 };
+
 }  // namespace vectors
 }  // namespace godison
 #endif  // VECTORS_H
