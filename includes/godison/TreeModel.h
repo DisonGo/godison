@@ -85,6 +85,7 @@ class TreeItem {
     }
     return -1;
   }
+  NodeType* GetNode() { return node_; }
   int ChildGensCount() {
     int max_gen_count = 0;
     for (auto item : child_items_) {
@@ -123,7 +124,7 @@ class TreeModel {
                        NodeType* parent_node = nullptr) = 0;
   virtual void DeleteItem(NodeType* node) = 0;
   bool IsInTree(NodeType* node) { return root_->IsChildObjectRecoursive(node); }
-  
+
  protected:
   std::shared_ptr<TItem> root_;
 };
