@@ -41,6 +41,7 @@ class TreeItem {
     return count;
   }
   // Does not add/delete widget to/of parent's child list
+  TreeItem* GetParent() { return parent_item_; }
   void SetParent(TreeItem* parent) { parent_item_ = parent; }
   bool IsChild(TreeItem* child) { return ChildIndex(child) != -1; }
   bool IsChildRecoursive(TreeItem* child) {
@@ -119,10 +120,10 @@ class TreeModel {
   }
   std::shared_ptr<TItem> GetRoot() { return root_; }
   virtual void AddItem(NodeType* node, std::string label, int insert_pos = -1,
-                       NodeType* parent = nullptr) = 0;
+                       NodeType* parent_node = nullptr) = 0;
   virtual void DeleteItem(NodeType* node) = 0;
   bool IsInTree(NodeType* node) { return root_->IsChildObjectRecoursive(node); }
-
+  
  protected:
   std::shared_ptr<TItem> root_;
 };
