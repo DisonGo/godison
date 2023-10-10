@@ -7,11 +7,12 @@
 
 namespace godison {
 namespace models {
-template <class T>
+template <class T, bool raw_ptrs = false>
 class TreeItem {
  public:
-  using NodeType = T;
-  TreeItem(NodeType* object, int insert_pos = -1, TreeItem* parent = nullptr)
+  using NodeType =
+      typename std::conditional<raw_ptrs, T*, std::shared_ptr<T>>::type;
+  TreeItem(NodeType object, int insert_pos = -1, TreeItem* parent = nullptr)
       : node_(object), parent_item_(parent) {
     if (!parent) return;
     parent->AddChild(this, insert_pos);
@@ -50,19 +51,19 @@ class TreeItem {
       if (item->IsChildRecoursive(child)) return true;
     return false;
   }
-  bool IsChildObject(NodeType* object) {
+  bool IsChildObject(NodeType object) {
     if (!object) return false;
     for (auto item : child_items_)
       if (item->node_ == object) return true;
     return false;
   }
-  bool IsChildObjectRecoursive(NodeType* object) {
+  bool IsChildObjectRecoursive(NodeType object) {
     if (IsChildObject(object)) return true;
     for (auto item : child_items_)
       if (item->IsChildObjectRecoursive(object)) return true;
     return false;
   }
-  TreeItem* FindItemByObject(NodeType* object) {
+  TreeItem* FindItemByObject(NodeType object) {
     if (object == node_) return this;
     for (auto item : child_items_) {
       auto ptr = item->FindItemByObject(object);
@@ -85,7 +86,7 @@ class TreeItem {
     }
     return -1;
   }
-  NodeType* GetNode() { return node_; }
+  NodeType GetNode() { return node_; }
   int ChildGensCount() {
     int max_gen_count = 0;
     for (auto item : child_items_) {
@@ -102,14 +103,15 @@ class TreeItem {
  protected:
   std::string name_{};
   TreeItem* parent_item_{};
-  NodeType* node_{};
+  NodeType node_{};
   std::vector<TreeItem*> child_items_;
 };
-template <class T>
+template <class T, bool raw_ptrs = false>
 class TreeModel {
  public:
-  using NodeType = T;
-  using TItem = TreeItem<NodeType>;
+  using NodeType =
+      typename std::conditional<raw_ptrs, T*, std::shared_ptr<T>>::type;
+  using TItem = TreeItem<T, raw_ptrs>;
   TreeModel() { root_ = std::make_shared<TItem>(nullptr); }
   virtual int Rows() {
     if (!root_) return 0;
@@ -120,10 +122,10 @@ class TreeModel {
     return root_->ChildGensCount();
   }
   std::shared_ptr<TItem> GetRoot() { return root_; }
-  virtual void AddItem(NodeType* node, std::string label, int insert_pos = -1,
-                       NodeType* parent_node = nullptr) = 0;
-  virtual void DeleteItem(NodeType* node) = 0;
-  bool IsInTree(NodeType* node) { return root_->IsChildObjectRecoursive(node); }
+  virtual void AddItem(NodeType node, std::string label, int insert_pos = -1,
+                       NodeType parent_node = nullptr) = 0;
+  virtual void DeleteItem(NodeType node) = 0;
+  bool IsInTree(NodeType node) { return root_->IsChildObjectRecoursive(node); }
 
  protected:
   std::shared_ptr<TItem> root_;
