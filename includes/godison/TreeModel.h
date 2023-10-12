@@ -13,7 +13,7 @@ class TreeItem {
   using NodeType =
       typename std::conditional<raw_ptrs, T*, std::shared_ptr<T>>::type;
   TreeItem(NodeType object, int insert_pos = -1, TreeItem* parent = nullptr)
-      : node_(object), parent_item_(parent) {
+      : parent_item_(parent), node_(object) {
     if (!parent) return;
     parent->AddChild(this, insert_pos);
   };
